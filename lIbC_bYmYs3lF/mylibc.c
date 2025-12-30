@@ -1,16 +1,4 @@
-#include <stdio.h>
 #include "mylibc.h"
-
-
-int main(){
-	char* source = "235";
-	printf("Démarrage du programme...\n");
-	printf("Son type est de %zu octets, et le résultat est %s\n", sizeof(source), source);
-	int result = atointeger(source);
-	printf("Son type est de %zu octets, et le résultat est %d\n", sizeof(result), result);
-	printf("Fin du programme...\n");
-	return 0;
-}
 
 // strlength fonctionnel
 

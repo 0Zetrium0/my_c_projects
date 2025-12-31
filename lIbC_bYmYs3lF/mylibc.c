@@ -1,5 +1,5 @@
 #include "mylibc.h"
-
+#include <stdlib.h>
 // strlength fonctionnel
 
 int strlength(char* s){
@@ -15,29 +15,26 @@ int strlength(char* s){
 // stringcopy fonctionnel
 
 char* stringcopy(char* s1, char* s2){
-	s2 = s1;
+	int i = 0;
+	while (s1[i] != '\0'){
+		s2[i] = s1[i];
+		i++;
+	}
+	s2[i] = '\0';
 	return s2;
 }
 
-// strcmp fonctionnel (peut-être pas très optimisé)
+// strcmp fonctionnel
 
 int stringcmp(char* s1, char* s2){
-	int result = 1;
-	if (strlength(s1) != strlength(s2)){
-		return result;
-	}
-	else if (strlength(s1) == 0 && strlength(s2) == 0){
-		return -1;
-	}
-	for (int i = 0; *(s1+i) != '\0'; i++){
-		if (*(s1+i) == *(s2+i)){
-			result = 0;
-			continue;
+	int i = 0;
+	while (s1[i] == s2[i]){
+		if (s1[i] == '\0' && s2[i] == '\0'){
+			return 0; 
 		}
-		result = 1;
-		break;
+		i++;
 	}
-	return result;
+	return 1;
 }
 
 //strchr fonctionnel

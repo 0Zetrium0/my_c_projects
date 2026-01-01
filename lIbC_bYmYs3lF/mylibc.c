@@ -1,5 +1,32 @@
+/*
+================================================
+               .__  ._____.           
+  _____ ___.__.|  | |__\_ |__   ____  
+ /     <   |  ||  | |  || __ \_/ ___\ 
+|  Y Y  \___  ||  |_|  || \_\ \  \___ 
+|__|_|  / ____||____/__||___  /\___  >
+      \/\/                  \/     \/ 
+
+
+      	        mylibc
+	 Librairie standard C 
+	Développé par z3trium
+
+------------------------------------------------
+
+Reimplémentation personnel de quelques
+fonctions de la lib standard C
+pour apprendre, maîtriser et mieux 
+comprendre le bas niveau ainsi que
+le langage C.
+
+================================================
+*/
+
+
 #include "mylibc.h"
 #include <stdlib.h>
+
 // strlength fonctionnel
 
 int strlength(char* s){
@@ -24,7 +51,7 @@ char* stringcopy(char* s1, char* s2){
 	return s2;
 }
 
-// strcmp fonctionnel
+// stringcmp fonctionnel
 
 int stringcmp(char* s1, char* s2){
 	int i = 0;
@@ -37,7 +64,7 @@ int stringcmp(char* s1, char* s2){
 	return 1;
 }
 
-//strchr fonctionnel
+// stringchr à améliorer => priorité moyenne
 
 int stringchr(char* s, char c){
 	for (int i = 0; *(s+i)!='\0'; i++){
@@ -48,22 +75,52 @@ int stringchr(char* s, char c){
 	return -1;
 }
 
-void* memory_copy(void* destination, void* source, int num_bytes){
-	char *p_destination = destination;
-	char *p_source = source;
-	for (int i = 0; i<num_bytes; i++){
-		*(p_destination+i) = *(p_source+i);
+// memory_copy fonctionnel
+
+void* memory_copy(void* destination, const void* source, size_t num_bytes){
+	if (num_bytes == 0 &&  (destination == NULL || source == NULL)){
+		return NULL;
+	}
+	else if (num_bytes == 0){
+		return destination;	
+	}
+	unsigned char *p_destination = destination;
+	const unsigned char *p_source = source;
+	for (size_t i = 0; i<num_bytes; i++){
+		p_destination[i] = p_source[i];
 	}
 	return destination;
 }
 
-// atointeger fonctionnel
+// atointeger amélioré (plus qu\'à optimiser tout ceci, la boucle for est exactement la même dans chaque test conditionnel)
 
 int atointeger(char* str){
 	int result = 0;
-	for (int i = 0; *(str+i) != '\0'; i++){
-		int digit = *(str+i) - '0';
-		result = result * 10 + digit;
+	if (str[0] == '-'){
+		for (int i = 1; str[i] != '\0'; i++){
+         		if (str[i] == ' ' || str[i] == '\t'){
+                        	continue;
+               		}
+			if (str[i] < '0' || str[i] > '9'){
+                                return -1;
+                        }
+               		int digit = *(str+i) - '0';
+                	result = result * 10 + digit;
+        	}
+		result = -result;
+		return result;
 	}
-	return result;
+	else {
+		for (int i = 0; str[i] != '\0'; i++){
+			if (str[i] == ' ' || str[i] == '\t'){
+				continue;
+			}
+			if (str[i] < '0' || str[i] > '9'){
+                                return -1;
+                        }
+			int digit = *(str+i) - '0';
+			result = result * 10 + digit;
+		}
+		return result;
+	}
 }

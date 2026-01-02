@@ -64,7 +64,7 @@ int stringcmp(char* s1, char* s2){
 	return 1;
 }
 
-// stringchr à améliorer => priorité moyenne
+// stringchr fonctionnel
 
 char* stringchr(char* s, char c){
 	int i = 0;

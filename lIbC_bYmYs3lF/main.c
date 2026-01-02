@@ -12,7 +12,8 @@ int main(){
 }
 
 void test(){
-	char* source = "-12b3";
-	int result = atointeger(source);
-	printf("Voici l'entier de source %d\n", result);
+	char* word = "bonjour";
+	char c = 'c';
+	char* result = stringchr(word, c);
+	printf("Voici ce qui est retourné : %p\n", result);
 }

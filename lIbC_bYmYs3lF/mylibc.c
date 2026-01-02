@@ -66,13 +66,17 @@ int stringcmp(char* s1, char* s2){
 
 // stringchr à améliorer => priorité moyenne
 
-int stringchr(char* s, char c){
-	for (int i = 0; *(s+i)!='\0'; i++){
-		if (*(s+i) == c){
-			return i+1;
+char* stringchr(char* s, char c){
+	int i = 0;
+	for (i; s[i]!='\0'; i++){
+		if (s[i] == c){
+			return &s[i];
 		}
 	}
-	return -1;
+	if (c == '\0'){
+		return &s[i];
+	}
+	return NULL;
 }
 
 // memory_copy fonctionnel
@@ -92,35 +96,28 @@ void* memory_copy(void* destination, const void* source, size_t num_bytes){
 	return destination;
 }
 
-// atointeger amélioré (plus qu\'à optimiser tout ceci, la boucle for est exactement la même dans chaque test conditionnel)
+// atointeger fonctionnel
 
 int atointeger(char* str){
-	int result = 0;
-	if (str[0] == '-'){
-		for (int i = 1; str[i] != '\0'; i++){
-         		if (str[i] == ' ' || str[i] == '\t'){
-                        	continue;
-               		}
-			if (str[i] < '0' || str[i] > '9'){
-                                return -1;
-                        }
-               		int digit = *(str+i) - '0';
-                	result = result * 10 + digit;
-        	}
-		result = -result;
-		return result;
-	}
-	else {
-		for (int i = 0; str[i] != '\0'; i++){
-			if (str[i] == ' ' || str[i] == '\t'){
-				continue;
-			}
-			if (str[i] < '0' || str[i] > '9'){
-                                return -1;
-                        }
-			int digit = *(str+i) - '0';
-			result = result * 10 + digit;
-		}
-		return result;
-	}
+        int result = 0;
+        int i = 0;
+        int condition_1 = str[0] == '-' || str[0] == '+';
+        int condition_2 = str[0] == '-';
+        if (condition_1){
+                i = 1;
+        }
+        for (i; str[i] != '\0'; i++){
+                if (str[i] == ' ' || str[i] == '\t'){
+                        continue;
+                }
+                if (str[i] < '0' || str[i] > '9'){
+                        return -1;
+                }
+                int digit = *(str+i) - '0';
+                result = result * 10 + digit;
+        }
+        if (condition_2){
+                result = -result;
+        }
+        return result;
 }
